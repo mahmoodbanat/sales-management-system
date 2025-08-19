@@ -13,7 +13,7 @@
         @endif
 
         <div class="mb-4">
-            <a href="{{ route('invoices.create') }}" class="bg-blue-500 text-black px-4 py-2 rounded">+ فاتورة جديدة</a>
+            <a href="{{ route('sales.create') }}" class="bg-blue-500 text-black px-4 py-2 rounded">+ فاتورة جديدة</a>
         </div>
 
         <table class="w-full border">
@@ -27,20 +27,20 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($invoices as $invoice)
+            @foreach($sales as $sale)
                 <tr>
-                    <td class="border px-4 py-2">{{ $invoice->id }}</td>
-                    <td class="border px-4 py-2">{{ $invoice->customer_name ?? 'غير محدد' }}</td>
-                    <td class="border px-4 py-2">{{ number_format($invoice->total, 2) }} جنيه</td>
-                    <td class="border px-4 py-2">{{ $invoice->created_at->format('Y-m-d H:i') }}</td>
+                    <td class="border px-4 py-2">{{ $sale->id }}</td>
+                    <td class="border px-4 py-2">{{ $sale->customer_name ?? 'غير محدد' }}</td>
+                    <td class="border px-4 py-2">{{ number_format($sale->total, 2) }} جنيه</td>
+                    <td class="border px-4 py-2">{{ $sale->created_at->format('Y-m-d H:i') }}</td>
                     <td class="border px-4 py-2">
                         <div class="flex space-x-2">
-                            <a href="{{ route('invoices.show', $invoice->id) }}">عرض </a>
+                            <a href="{{ route('sales.show', $sale->id) }}">عرض</a>
 
-                            <form action="{{ route('invoices.destroy', $invoice->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+                            <form action="{{ route('sales.destroy', $sale->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 ml-3"> حذف </button>
+                                <button type="submit" class="text-red-600 ml-3">حذف</button>
                             </form>
                         </div>
                     </td>
@@ -50,7 +50,7 @@
         </table>
 
         <div class="mt-4">
-            {{ $invoices->links() }}
+            {{ $sales->links() }}
         </div>
     </div>
 @endsection

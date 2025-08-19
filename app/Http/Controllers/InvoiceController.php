@@ -6,13 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Models\Sale;
 
 class InvoiceController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::latest()->paginate(10); // نعرض 10 فواتير في كل صفحة
-        return view('invoices.index', compact('invoices'));
+        // نجلب المبيعات مع تفاصيل العميل والمنتجات
+        $sales = Sale::with(['customer', 'items.product'])->latest()->paginate(10);
+
+        return view('invoices.index', compact('sales'));
+
     }
 
     public function create()
@@ -41,7 +45,8 @@ class InvoiceController extends Controller
         // ✅ إنشاء الفاتورة
         $invoice = Invoice::create([
             'customer_name' => $request->customer_name,
-            'total' => 0, // مؤقتًا، هنحسبه بعدين
+            'total' => $request->total
+
         ]);
 
         $total = 0;

@@ -11,21 +11,34 @@ class DashboardController extends Controller
     {
         // إحصائيات المبيعات لآخر 7 أيام
         $salesData = DB::table('sales')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(total) as total'))
-            ->groupBy('date')
+            ->select(
+                DB::raw('DATE(created_at) as date'),
+                DB::raw('SUM(total) as total')
+            )
+            ->groupBy(DB::raw('DATE(created_at)'))
             ->orderBy('date', 'asc')
             ->limit(7)
             ->get();
 
+        // تجهيز بيانات الرسم البياني
+        $dates = $salesData->pluck('date');
+        $totals = $salesData->pluck('total');
+
         // عدد المنتجات
-        $productsCount = DB::table('products')->count();
+        $totalProducts = DB::table('products')->count();
 
         // عدد المبيعات
-        $salesCount = DB::table('sales')->count();
+        $totalSales = DB::table('sales')->count();
 
         // عدد المستخدمين
-        $usersCount = DB::table('users')->count();
+        $totalUsers = DB::table('users')->count();
 
-        return view('dashboard.index', compact('salesData', 'productsCount', 'salesCount', 'usersCount'));
+        return view('dashboard.index', compact(
+            'dates',
+            'totals',
+            'totalProducts',
+            'totalSales',
+            'totalUsers'
+        ));
     }
 }

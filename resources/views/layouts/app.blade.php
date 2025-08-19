@@ -26,6 +26,7 @@
                 <a href="{{ route('reports.index') }}" class="hover:bg-purple-700 px-3 py-2 rounded">التقارير</a>
                 <a href="{{ route('users.index') }}" class="hover:bg-purple-700 px-3 py-2 rounded">المستخدمين</a>
                 <a href="{{ route('settings.index') }}" class="hover:bg-purple-700 px-3 py-2 rounded">الإعدادات</a>
+                <a href="{{ route('dashboard') }}" class="hover:bg-purple-700 px-3 py-2 rounded">لوحة التحكم</a>
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
                     <button type="submit" class="hover:bg-purple-700 px-3 py-2 rounded">تسجيل الخروج</button>
